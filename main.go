@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"slices"
 )
 
 type GithubAction struct {
@@ -205,7 +206,18 @@ type GithubActionHeadCommitCommiter struct {
 }
 
 func (g GithubAction) IsContained(filename string) bool {
-	return true
+	for _, commit := range g.Commits {
+		if slices.Contains(commit.Added, filename) {
+			return true
+		}
+		if slices.Contains(commit.Modified, filename) {
+			return true
+		}
+		if slices.Contains(commit.Removed, filename) {
+			return true
+		}
+	}
+	return false
 }
 
 func main() {
