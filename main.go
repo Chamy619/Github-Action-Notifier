@@ -204,6 +204,10 @@ type GithubActionHeadCommitCommiter struct {
 	Username string `json:"username"`
 }
 
+func (g GithubAction) IsContained(filename string) bool {
+	return true
+}
+
 func main() {
 	fmt.Println("Welcome github action notifier")
 }
