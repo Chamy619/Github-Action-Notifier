@@ -1,0 +1,14 @@
+notifies:
+  - files:
+      - name: apps/master-api/config.ini.sample
+        type: github-action
+        added: false
+        modified: true
+        removed: false
+        message: apps/master-api/config.ini.sample file is changed
+      - name: app/judge/config/setting.ini.smaple
+        type: github-action
+        added: false
+        modified: true
+        removed: false
+        message: app/judge/config/setting.ini.smaple file is changed
