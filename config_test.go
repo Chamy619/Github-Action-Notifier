@@ -39,7 +39,7 @@ func TestNewConfig(t *testing.T) {
 	AssertEqual(t, wantMessengerType, gotMessengerType)
 
 	gotMessengerUrl := config.Notifies[0].Files[0].Messenger.Url
-	wantMessengerUrl := "https://hooks.slack.com/services/key"
+	wantMessengerUrl := "https://hooks.slack.com/services/key1/key2/key3"
 	AssertEqual(t, wantMessengerUrl, gotMessengerUrl)
 }
 
