@@ -6,9 +6,15 @@ notifies:
         modified: true
         removed: false
         message: apps/master-api/config.ini.sample file is changed
+        messenger:
+          type: slack
+          url: https://hooks.slack.com/services/key
       - name: app/judge/config/setting.ini.smaple
         type: github-action
         added: false
         modified: true
         removed: false
         message: app/judge/config/setting.ini.smaple file is changed
+        messenger:
+          type: slack
+          url: https://hooks.slack.com/services/key

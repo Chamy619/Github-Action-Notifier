@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"os"
 
 	"gopkg.in/yaml.v3"
@@ -23,6 +22,12 @@ type GithubActionFile struct {
 	Modified bool `yaml:"modified"`
 	Removed bool `yaml:"removed"`
 	Message string `yaml:"message"`
+	Messenger `yaml:"messenger"`
+}
+
+type Messenger struct {
+	Type string `yaml:"type"`
+	Url string `yaml:"url"`
 }
 
 func NewConfig(filename string) (*Config, error) {
@@ -37,7 +42,6 @@ func NewConfig(filename string) (*Config, error) {
 	if err != nil {
 		return nil, errors.New("yaml file is not invalid")
 	}
-	fmt.Println(config.Notifies[0].Files)
 
 	return &config, nil
 }

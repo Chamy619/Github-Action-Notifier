@@ -33,6 +33,14 @@ func TestNewConfig(t *testing.T) {
 	gotMessage := config.Notifies[0].Files[0].Message
 	wantMessage := "apps/master-api/config.ini.sample file is changed"
 	AssertEqual(t, wantMessage, gotMessage)
+
+	gotMessengerType := config.Notifies[0].Files[0].Messenger.Type
+	wantMessengerType := "slack"
+	AssertEqual(t, wantMessengerType, gotMessengerType)
+
+	gotMessengerUrl := config.Notifies[0].Files[0].Messenger.Url
+	wantMessengerUrl := "https://hooks.slack.com/services/key"
+	AssertEqual(t, wantMessengerUrl, gotMessengerUrl)
 }
 
 func TestNewConfigNotExistFile(t *testing.T) {
