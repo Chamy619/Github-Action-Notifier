@@ -1,31 +1,70 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
-	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"strconv"
 )
 
+type GithubActionHttpRequestBody struct {
+	Payload string `json:"payload"`
+}
+
 func main() {
+	// 플래그 설정
 	configFilenamePtr := flag.String("config", "config.yaml", "config file name")
 	hostPtr := flag.String("host", "localhost", "host")
 	portPtr := flag.Int64("port", 8080, "port")
 
 	flag.Parse()
 	
+	// 설정 파일 불러오기
 	config, err := NewConfig(*configFilenamePtr)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	configHandler := func(writer http.ResponseWriter, request *http.Request) {
-		configStr := fmt.Sprintf("%v", config)
-		writer.Write([]byte(configStr))
-	}
+	// 서비스 생성
+	githubActionService := NewGithubActionService(config)
 
-	http.HandleFunc("/config", configHandler)
+	http.HandleFunc("/github-action", func(writer http.ResponseWriter, request *http.Request) {
+		if request.Method != http.MethodPost {
+			writer.WriteHeader(http.StatusNotFound)
+			writer.Write([]byte("invalid method"))
+			return
+		}
 
-	http.ListenAndServe(*hostPtr + ":" + strconv.FormatInt(*portPtr, 10), nil)
+		body, err := io.ReadAll(request.Body)
+		if err != nil {
+			log.Printf("not readable body: %v", err)
+		}
+
+		var githubActionHttpRequestBody GithubActionHttpRequestBody
+		err = json.Unmarshal(body, &githubActionHttpRequestBody)
+		if err != nil {
+			writer.WriteHeader(http.StatusBadRequest)
+			writer.Write([]byte("request body unmarshaling fail"))
+			return
+		}
+		if githubActionHttpRequestBody.Payload == "" {
+			writer.WriteHeader(http.StatusBadRequest)
+			writer.Write([]byte("invalid body"))
+			return
+		}
+
+		err = githubActionService.Pushed(githubActionHttpRequestBody)
+		if err != nil {
+			writer.WriteHeader(http.StatusInternalServerError)
+			writer.Write([]byte("internal server error"))
+			return
+		}
+
+		writer.Write([]byte("ok"))
+	})
+
+	log.Printf("starting Notifier %v:%v", *hostPtr, *portPtr)
+	log.Fatal(http.ListenAndServe(*hostPtr + ":" + strconv.FormatInt(*portPtr, 10), nil))
 }
