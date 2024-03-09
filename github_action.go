@@ -202,16 +202,21 @@ type GithubActionHeadCommitCommiter struct {
 	Username string `json:"username"`
 }
 
-func (g GithubAction) IsContained(filename string) bool {
+func (g GithubAction) IsContained(filename string, behavior string) bool {
 	for _, commit := range g.Commits {
-		if slices.Contains(commit.Added, filename) {
-			return true
-		}
-		if slices.Contains(commit.Modified, filename) {
-			return true
-		}
-		if slices.Contains(commit.Removed, filename) {
-			return true
+		switch behavior {
+		case "added":
+			if slices.Contains(commit.Added, filename) {
+				return true
+			}
+		case "modified":
+			if slices.Contains(commit.Modified, filename) {
+				return true
+			}
+		case "removed":
+			if slices.Contains(commit.Removed, filename) {
+				return true
+			}
 		}
 	}
 	return false
