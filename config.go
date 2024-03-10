@@ -16,18 +16,18 @@ type Notify struct {
 }
 
 type GithubActionFile struct {
-	Name string `yaml:"name"`
-	Type string `yaml:"type"`
-	Added bool `yaml:"added"`
-	Modified bool `yaml:"modified"`
-	Removed bool `yaml:"removed"`
-	Message string `yaml:"message"`
+	Name      string `yaml:"name"`
+	Type      string `yaml:"type"`
+	Added     bool   `yaml:"added"`
+	Modified  bool   `yaml:"modified"`
+	Removed   bool   `yaml:"removed"`
+	Message   string `yaml:"message"`
 	Messenger `yaml:"messenger"`
 }
 
 type Messenger struct {
 	Type string `yaml:"type"`
-	Url string `yaml:"url"`
+	Url  string `yaml:"url"`
 }
 
 func NewConfig(filename string) (*Config, error) {

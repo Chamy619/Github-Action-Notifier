@@ -9,7 +9,7 @@ func TestNewConfig(t *testing.T) {
 	if err != nil {
 		t.Errorf("NewConfig fail: %s", err)
 	}
-	
+
 	gotName := config.Notifies[0].Files[0].Name
 	wantName := "apps/master-api/config.ini.sample"
 	AssertEqual(t, wantName, gotName)
@@ -21,7 +21,7 @@ func TestNewConfig(t *testing.T) {
 	gotAdded := config.Notifies[0].Files[0].Added
 	wantAdded := false
 	AssertEqual(t, wantAdded, gotAdded)
-	
+
 	gotModified := config.Notifies[0].Files[0].Modified
 	wantModified := true
 	AssertEqual(t, wantModified, gotModified)

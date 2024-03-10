@@ -20,7 +20,7 @@ func main() {
 	portPtr := flag.Int64("port", 8080, "port")
 
 	flag.Parse()
-	
+
 	// 설정 파일 불러오기
 	config, err := NewConfig(*configFilenamePtr)
 	if err != nil {
@@ -66,5 +66,5 @@ func main() {
 	})
 
 	log.Printf("starting Notifier %v:%v", *hostPtr, *portPtr)
-	log.Fatal(http.ListenAndServe(*hostPtr + ":" + strconv.FormatInt(*portPtr, 10), nil))
+	log.Fatal(http.ListenAndServe(*hostPtr+":"+strconv.FormatInt(*portPtr, 10), nil))
 }

@@ -3,9 +3,9 @@ package main
 import "encoding/json"
 
 const (
-	ADDED = "added"
+	ADDED    = "added"
 	MODIFIED = "modified"
-	REMOVED = "removed"
+	REMOVED  = "removed"
 )
 
 type GithubActionService struct {
