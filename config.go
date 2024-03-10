@@ -27,7 +27,7 @@ type GithubActionFile struct {
 
 type Messenger struct {
 	Type string `yaml:"type"`
-	Url  string `yaml:"url"`
+	URL  string `yaml:"url"`
 }
 
 func NewConfig(filename string) (*Config, error) {

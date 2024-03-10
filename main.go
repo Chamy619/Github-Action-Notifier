@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-type GithubActionHttpRequestBody struct {
+type GithubActionHTTPRequestBody struct {
 	Payload string `json:"payload"`
 }
 
@@ -42,20 +42,20 @@ func main() {
 			log.Printf("not readable body: %v", err)
 		}
 
-		var githubActionHttpRequestBody GithubActionHttpRequestBody
-		err = json.Unmarshal(body, &githubActionHttpRequestBody)
+		var githubActionHTTPRequestBody GithubActionHTTPRequestBody
+		err = json.Unmarshal(body, &githubActionHTTPRequestBody)
 		if err != nil {
 			writer.WriteHeader(http.StatusBadRequest)
 			writer.Write([]byte("request body unmarshaling fail"))
 			return
 		}
-		if githubActionHttpRequestBody.Payload == "" {
+		if githubActionHTTPRequestBody.Payload == "" {
 			writer.WriteHeader(http.StatusBadRequest)
 			writer.Write([]byte("invalid body"))
 			return
 		}
 
-		err = githubActionService.Pushed(githubActionHttpRequestBody)
+		err = githubActionService.Pushed(githubActionHTTPRequestBody)
 		if err != nil {
 			writer.WriteHeader(http.StatusInternalServerError)
 			writer.Write([]byte("internal server error"))

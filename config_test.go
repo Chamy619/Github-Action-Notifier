@@ -38,9 +38,9 @@ func TestNewConfig(t *testing.T) {
 	wantMessengerType := "slack"
 	AssertEqual(t, wantMessengerType, gotMessengerType)
 
-	gotMessengerUrl := config.Notifies[0].Files[0].Messenger.Url
-	wantMessengerUrl := "https://hooks.slack.com/services/key1/key2/key3"
-	AssertEqual(t, wantMessengerUrl, gotMessengerUrl)
+	gotMessengerURL := config.Notifies[0].Files[0].Messenger.URL
+	wantMessengerURL := "https://hooks.slack.com/services/key1/key2/key3"
+	AssertEqual(t, wantMessengerURL, gotMessengerURL)
 }
 
 func TestNewConfigNotExistFile(t *testing.T) {

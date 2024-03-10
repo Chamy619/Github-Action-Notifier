@@ -18,7 +18,7 @@ func NewGithubActionService(config *Config) *GithubActionService {
 	}
 }
 
-func (g *GithubActionService) Pushed(request GithubActionHttpRequestBody) error {
+func (g *GithubActionService) Pushed(request GithubActionHTTPRequestBody) error {
 	var githubAction GithubAction
 	err := json.Unmarshal([]byte(request.Payload), &githubAction)
 	if err != nil {
@@ -28,13 +28,13 @@ func (g *GithubActionService) Pushed(request GithubActionHttpRequestBody) error 
 	for _, notifier := range g.Config.Notifies {
 		for _, file := range notifier.Files {
 			if file.Added && githubAction.IsContained(file.Name, ADDED) {
-				Send(file.Messenger.Type, file.Messenger.Url, file.Message)
+				Send(file.Messenger.Type, file.Messenger.URL, file.Message)
 			}
 			if file.Modified && githubAction.IsContained(file.Name, MODIFIED) {
-				Send(file.Messenger.Type, file.Messenger.Url, file.Message)
+				Send(file.Messenger.Type, file.Messenger.URL, file.Message)
 			}
 			if file.Removed && githubAction.IsContained(file.Name, REMOVED) {
-				Send(file.Messenger.Type, file.Messenger.Url, file.Message)
+				Send(file.Messenger.Type, file.Messenger.URL, file.Message)
 			}
 		}
 	}
