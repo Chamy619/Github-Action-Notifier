@@ -110,7 +110,7 @@ type GithubActionRepositoryOwner struct {
 	Login             string `json:"login"`
 	AvatarURL         string `json:"avatar_url"`
 	GravatarID        string `json:"gravatar_id"`
-	URL	              string `json:"url"`
+	URL               string `json:"url"`
 	HTMLURL           string `json:"html_url"`
 	FollowersURL      string `json:"followers_url"`
 	GistsURL          string `json:"gists_url"`
